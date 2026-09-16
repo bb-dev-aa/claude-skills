@@ -1,0 +1,23 @@
+{
+  "name": "claude-skills",
+  "owner": {
+    "name": "Abdullah Aqeel"
+  },
+  "metadata": {
+    "description": "Claude Code skills for Shopify Online Store 2.0 theme development workflow",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "shopify-theme-skills",
+      "description": "Task lifecycle orchestration (/lets-work), engineering knowledge capture (/devdocs), and automated Playwright test generation (/test-changes) for Shopify theme development",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/lets-work",
+        "./skills/devdocs",
+        "./skills/test-changes"
+      ]
+    }
+  ]
+}
