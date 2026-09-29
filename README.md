@@ -43,8 +43,8 @@ Turns a completed task and its linked PR into durable, searchable documentation 
 Closes the loop on a change by turning "did I break anything?" into an automated check instead of a manual pass.
 
 - Reads your staged theme file changes together with the relevant Asana task (and a linked Figma design, if any) to understand what changed and what it's supposed to do.
-- Generates one self-contained Playwright spec covering **functional behavior, responsive breakpoints (mobile/tablet/desktop/large), accessibility (serious/critical axe violations), and a Figma-measurement match** for anything the change touched.
-- Runs it against the preview URL you provide and reports pass/fail counts and plain-English failure details in chat, plus the spec and JSON results file paths — organized by client and task.
+- Generates one self-contained Playwright spec covering **functional behavior, responsive breakpoints (desktop 1512×923, mobile — iPhone 14 Pro), accessibility (serious/critical axe violations), and a Figma-measurement match** for anything the change touched.
+- Runs it against the preview URL you provide (6 parallel workers, `list` reporter — console output only) and reports pass/fail counts and plain-English failure details in chat, plus the spec file path and a failure-screenshot folder when anything fails — organized by client and task.
 
 ## How they fit together
 

@@ -20,8 +20,10 @@ playwright/
   playwright.config.ts
   test-results/<client>/<client>-<task-slug>-<timestamp>/
     <task-slug>.spec.ts
-    results.json           # Playwright's own output (json reporter only — no html report, no traces/videos)
+    artifacts/              # Playwright's outputDir — failure screenshots only (video/trace off). Deliberately a subfolder, not the run folder itself, since Playwright wipes outputDir before each run and the spec file must survive that.
 ```
+
+Reporter is `list` (console output only) — there's no `results.json`. Parse pass/fail counts and failure messages straight from the `npx playwright test` stdout.
 
 `node_modules`/`package.json` there already have `@playwright/test` and `@axe-core/playwright` installed — don't reinstall or change them. If a run ever needs a package that isn't there, install just that one package, nothing more.
 
@@ -39,7 +41,7 @@ playwright/
 
 6. **Generate the spec.** One file: `playwright/test-results/<client>/<client>-<task-slug>-<timestamp>/<task-slug>.spec.ts`. Structure:
    - `test.describe('<Section>: Functional')` — renders correctly, acceptance criteria from the task if any, regression scoped to the changed file(s) only (never header/footer/unrelated sections).
-   - `test.describe('<Section>: Breakpoints')` — runs across the config's four fixed projects: `large` (1920x1080), `desktop` (1512x923), `tablet` (834x1112), `mobile` (iPhone 14 Pro). No horizontal scroll, section stays inside the viewport, tap targets ≥ 24px. Never use two `test.use({ viewport })` calls in the same describe — the last one silently wins; use Playwright projects instead.
+   - `test.describe('<Section>: Breakpoints')` — runs across the config's two fixed projects: `desktop` (1512x923) and `mobile` (iPhone 14 Pro). No horizontal scroll, section stays inside the viewport, tap targets ≥ 24px. Never use two `test.use({ viewport })` calls in the same describe — the last one silently wins; use Playwright projects instead.
    - `test.describe('<Section>: Accessibility')` — `AxeBuilder` scoped to the section, fail only on serious/critical.
    - `test.describe('<Section>: Figma match')` — for each measurement from Step 5, assert the live computed style against the Figma value, with a plain-English failure message, e.g.:
      ```ts
@@ -57,17 +59,17 @@ playwright/
    TEST_DIR=<abs run folder> BASE_URL=<preview link verbatim> \
      npx playwright test --config=playwright.config.ts --retries=2 --timeout=45000
    ```
-   A failure that repeats identically on every retry is real — read the error before calling it flaky.
+   A failure that repeats identically on every retry is real — read the error before calling it flaky. The config runs `fullyParallel` with 6 workers, so `list`-reporter output interleaves across concurrently-running tests — read the final summary counts, not line order, when building the report below.
 
-8. **Report in chat**, plainly:
+8. **Report in chat**, plainly, parsed from that stdout (reporter is `list` — there's no `results.json` to read instead):
    ```
    Functional      ✅ 3 passed
    Breakpoints     ✅ 5 passed  ❌ 1 failed (375px: content overflows viewport)
    Accessibility   ✅ 0 serious/critical
    Figma match     ❌ Padding is inconsistent: expected 60px, got 40px (desktop, .case-study-list)
 
-   Results: playwright/test-results/<run folder>/results.json
-   Spec:    playwright/test-results/<run folder>/<task-slug>.spec.ts
+   Spec:      playwright/test-results/<run folder>/<task-slug>.spec.ts
+   Failures:  playwright/test-results/<run folder>/artifacts/  (screenshots only — video/trace are off)
    ```
    All passed → "✅ All checks passed."
 
