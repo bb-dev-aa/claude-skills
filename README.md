@@ -2,7 +2,7 @@
 
 A small set of [Claude Code](https://claude.com/claude-code) [Agent Skills](https://code.claude.com/docs/en/skills) built for day-to-day Shopify Online Store 2.0 theme development. Each skill automates one recurring, time-consuming part of the workflow — picking up and shipping a task, capturing what you learned along the way, and testing what you changed — so that work stays in the editor instead of bouncing across Asana, the terminal, GitHub, and Shopify Admin by hand.
 
-They were built and refined against real client theme work over several iterations, not written speculatively — see each skill's own "Learnings log" for the dated history of what changed and why.
+They were built and refined against real client theme work over several iterations, not written speculatively.
 
 ## Why these exist
 
@@ -20,7 +20,7 @@ Each skill below targets exactly one of these.
 |---|---|---|
 | [`/lets-work`](skills/lets-work/SKILL.md) | Task pickup → dev → QA handoff | Asana MCP · Shopify CLI · GitHub CLI (`gh`) |
 | [`/devdocs`](skills/devdocs/SKILL.md) | Capturing & reloading engineering knowledge | Asana MCP · GitHub · Google Drive |
-| [`/test-changes`](skills/test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Shopify CLI · Playwright · Figma MCP (optional) |
+| [`/test-changes`](skills/test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Playwright (`@axe-core/playwright`) · Figma MCP (optional) |
 
 ### [`/lets-work`](skills/lets-work/SKILL.md) — session orchestrator
 
@@ -34,7 +34,7 @@ The single entry point for "what am I working on right now." It tracks the activ
 
 Turns a completed task and its linked PR into durable, searchable documentation instead of letting it evaporate.
 
-- **Capture:** reads a completed task + its PR, classifies what was learned (**Bug Fix, New Pattern, Shopify Limitation, Best Practice,** or **Discovered Architecture**), and writes it into that client's changelog (and architecture doc, if relevant) — deduplicated so re-runs update rather than duplicate entries.
+- **Capture:** reads a completed task + its PR, classifies what was learned (**Bug Fix, New Pattern, Shopify Limitation, Best Practice, Discovered Understanding,** or **Skip / Low Value**), and writes it into that client's `changelog.md` — deduplicated by Asana task ID so re-runs update in place rather than duplicating entries.
 - **Load (`get-context`):** pulls a client's existing docs back into the session *before* new work starts, and actively cross-checks new work against known fixes/limitations as you go.
 - **Shared promotion:** genuinely reusable knowledge only gets promoted to cross-client shared docs through an explicit, separate step — never automatically, so shared docs stay curated rather than a dumping ground.
 
@@ -43,8 +43,8 @@ Turns a completed task and its linked PR into durable, searchable documentation 
 Closes the loop on a change by turning "did I break anything?" into an automated check instead of a manual pass.
 
 - Reads your staged theme file changes together with the relevant Asana task (and a linked Figma design, if any) to understand what changed and what it's supposed to do.
-- Generates a Playwright test file covering **happy path, error scenarios, responsive breakpoints, accessibility, and regressions** on anything else the change touched.
-- Runs it against your live preview theme and reports pass/fail counts, failure details, and a link to the full HTML report — organized by client and task.
+- Generates one self-contained Playwright spec covering **functional behavior, responsive breakpoints (mobile/tablet/desktop/large), accessibility (serious/critical axe violations), and a Figma-measurement match** for anything the change touched.
+- Runs it against the preview URL you provide and reports pass/fail counts and plain-English failure details in chat, plus the spec and JSON results file paths — organized by client and task.
 
 ## How they fit together
 
@@ -74,7 +74,7 @@ Either way: each `SKILL.md` documents its own required connections, configuratio
 ## Requirements
 
 - [Claude Code](https://claude.com/claude-code)
-- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli)
+- [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) for `/lets-work`
 - [GitHub CLI](https://cli.github.com/) (`gh`)
 - MCP connectors for Asana, Google Drive, and (optionally) Figma
-- [Playwright](https://playwright.dev/) for `/test-changes`
+- [Playwright](https://playwright.dev/) with [`@axe-core/playwright`](https://www.npmjs.com/package/@axe-core/playwright) for `/test-changes`
