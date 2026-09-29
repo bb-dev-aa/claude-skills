@@ -20,7 +20,7 @@ Each skill below targets exactly one of these.
 |---|---|---|
 | [`/lets-work`](skills/lets-work/SKILL.md) | Task pickup → dev → QA handoff | Asana MCP · Shopify CLI · GitHub CLI (`gh`) |
 | [`/devdocs`](skills/devdocs/SKILL.md) | Capturing & reloading engineering knowledge | Asana MCP · GitHub · Google Drive |
-| [`/test-changes`](skills/test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Playwright (`@axe-core/playwright`) · Figma MCP (optional) |
+| [`/test-changes`](skills/test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Playwright (`@axe-core/playwright`) · Figma MCP |
 
 ### [`/lets-work`](skills/lets-work/SKILL.md) — session orchestrator
 
@@ -76,5 +76,5 @@ Either way: each `SKILL.md` documents its own required connections, configuratio
 - [Claude Code](https://claude.com/claude-code)
 - [Shopify CLI](https://shopify.dev/docs/api/shopify-cli) for `/lets-work`
 - [GitHub CLI](https://cli.github.com/) (`gh`)
-- MCP connectors for Asana, Google Drive, and (optionally) Figma
+- MCP connectors for Asana, Google Drive, and Figma
 - [Playwright](https://playwright.dev/) with [`@axe-core/playwright`](https://www.npmjs.com/package/@axe-core/playwright) for `/test-changes`
