@@ -18,11 +18,11 @@ Each skill below targets exactly one of these.
 
 | Skill | Solves | Requires |
 |---|---|---|
-| [`/lets-work`](skills/lets-work/SKILL.md) | Task pickup → dev → QA handoff | Asana MCP · Shopify CLI · GitHub CLI (`gh`) |
-| [`/devdocs`](skills/devdocs/SKILL.md) | Capturing & reloading engineering knowledge | Asana MCP · GitHub · Google Drive |
-| [`/test-changes`](skills/test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Playwright (`@axe-core/playwright`) · Figma MCP (optional) |
+| [`/lets-work`](lets-work/SKILL.md) | Task pickup → dev → QA handoff | Asana MCP · Shopify CLI · GitHub CLI (`gh`) |
+| [`/devdocs`](devdocs/SKILL.md) | Capturing & reloading engineering knowledge | Asana MCP · GitHub · Google Drive |
+| [`/test-changes`](test-changes/SKILL.md) | Generating & running tests against changes | Asana MCP · Git · Playwright (`@axe-core/playwright`) · Figma MCP (optional) |
 
-### [`/lets-work`](skills/lets-work/SKILL.md) — session orchestrator
+### [`/lets-work`](lets-work/SKILL.md) — session orchestrator
 
 The single entry point for "what am I working on right now." It tracks the active task for the whole session and knows which phase it's in, so re-running it mid-task resumes correctly instead of restarting.
 
@@ -30,7 +30,7 @@ The single entry point for "what am I working on right now." It tracks the activ
 - **Ship:** once you confirm the change is done and staged, it drafts a commit message, pushes the branch, opens a PR against the repo's own correct base branch, and links the PR back on the Asana task.
 - **QA handoff:** stands up a QA preview (a real GitHub-connected theme, a disposable CLI-pushed one, or the store's existing staging theme, depending on engagement type), then files FQA/DQA subtasks with the preview link attached and updates the task's status.
 
-### [`/devdocs`](skills/devdocs/SKILL.md) — knowledge capture & recall
+### [`/devdocs`](devdocs/SKILL.md) — knowledge capture & recall
 
 Turns a completed task and its linked PR into durable, searchable documentation instead of letting it evaporate.
 
@@ -38,7 +38,7 @@ Turns a completed task and its linked PR into durable, searchable documentation 
 - **Load (`get-context`):** pulls a client's existing docs back into the session *before* new work starts, and actively cross-checks new work against known fixes/limitations as you go.
 - **Shared promotion:** genuinely reusable knowledge only gets promoted to cross-client shared docs through an explicit, separate step — never automatically, so shared docs stay curated rather than a dumping ground.
 
-### [`/test-changes`](skills/test-changes/SKILL.md) — generate & run tests
+### [`/test-changes`](test-changes/SKILL.md) — generate & run tests
 
 Closes the loop on a change by turning "did I break anything?" into an automated check instead of a manual pass.
 
@@ -61,11 +61,11 @@ This repo is a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`
 /plugin install shopify-theme-skills@claude-skills
 ```
 
-Claude Code fetches the `skills/` folder and makes `/lets-work`, `/devdocs`, and `/test-changes` available automatically. Re-running `/plugin marketplace add` after a push picks up updates.
+Claude Code fetches the skill folders and makes `/lets-work`, `/devdocs`, and `/test-changes` available automatically. Re-running `/plugin marketplace add` after a push picks up updates.
 
 ### Option B — copy manually
 
-1. Copy the `skills/` folder into your own workspace's `.claude/skills/` directory (or a specific project's).
+1. Clone this repo as your workspace's `.claude/skills/` directory (or a specific project's).
 2. Connect whichever MCP servers the skills you're using need — Asana, Google Drive, Figma, GitHub — inside Claude Code.
 3. Run the slash command for the skill you want, e.g. `/lets-work`.
 

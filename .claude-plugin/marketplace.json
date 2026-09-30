@@ -14,9 +14,9 @@
       "source": "./",
       "strict": false,
       "skills": [
-        "./skills/lets-work",
-        "./skills/devdocs",
-        "./skills/test-changes"
+        "./lets-work",
+        "./devdocs",
+        "./test-changes"
       ]
     }
   ]
