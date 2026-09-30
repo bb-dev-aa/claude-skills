@@ -1,3 +1,8 @@
+---
+name: test-changes
+description: Generates and runs one self-contained Playwright spec for the currently staged Shopify theme changes, checking functional behavior, mobile/desktop breakpoints, accessibility (axe serious/critical), and a Figma measurement match, then reports pass/fail per category in chat. Reads the Asana task and Figma link, asks for the Theme Editor preview link, and writes everything under the workspace's playwright/ folder, never into a client repo. Use when the user says "test my changes", "run tests on staged changes", "/test-changes", or wants to verify a theme change against Figma, breakpoints, and accessibility before QA.
+---
+
 Base directory for this skill: `.claude/skills/test-changes`
 
 # test-changes: Simple E2E Testing for Shopify Theme Changes
